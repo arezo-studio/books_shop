@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سفارش‌های من | کتاب‌فروشی جنگل جادویی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #F1E8D9;
+            color: #2E1E16;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #3B5323;
+            margin-bottom: 30px;
+        }
+        .order-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .order-items {
+            list-style: none;
+            padding: 0;
+        }
+        .order-items li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .total {
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .empty {
+            text-align: center;
+            color: #999;
+            font-size: 1.3rem;
+            padding: 40px 0;
+        }
+        a {
+            color: #B8860B;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>سفارش‌های من</h1>
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <span>سفارش #{{ order.id }}</span>
+                        <span>{{ order.created_at.strftime('%Y/%m/%d %H:%M') }}</span>
+                        <span>وضعیت: {{ order.status }}</span>
+                    </div>
+                    <ul class="order-items">
+                        {% for item in order.items %}
+                            <li>
+                                <span>{{ item.book.title }} ({{ item.quantity }} × {{ item.price }} تومان)</span>
+                                <span>{{ item.quantity * item.price }} تومان</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="total">
+                        جمع کل: {{ order.total_price }} تومان
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">هنوز سفارشی ثبت نکرده‌اید.</p>
+        {% endif %}
+        <p style="margin-top: 20px;"><a href="{{ url_for('shop') }}">بازگشت به فروشگاه</a></p>
+    </div>
+</body>
+</html>
