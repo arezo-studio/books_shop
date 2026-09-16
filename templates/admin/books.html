@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت کتاب‌ها | پنل مدیریت</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Vazirmatn', sans-serif; background: #f4f6f8; color: #2E1E16; }
+        .sidebar { position: fixed; right: 0; top: 0; width: 220px; height: 100vh; background: #2E1E16; color: #F1E8D9; padding: 20px 0; overflow-y: auto; }
+        .sidebar h2 { text-align: center; color: #d4af37; margin-bottom: 30px; font-size: 1.3rem; }
+        .sidebar a { display: block; color: #F1E8D9; padding: 12px 20px; text-decoration: none; transition: background 0.3s; font-size: 0.95rem; }
+        .sidebar a:hover { background: #5A7A3A; }
+        .sidebar a.active { background: #3B5323; border-right: 4px solid #d4af37; }
+        .main { margin-right: 220px; padding: 30px; }
+        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .main h1 { color: #3B5323; border-bottom: 3px solid #d4af37; display: inline-block; padding-bottom: 5px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none; cursor: pointer; font-family: inherit; font-size: 0.95rem; display: inline-block; }
+        .btn-add { background: #3B5323; color: #fff; }
+        .btn-add:hover { background: #5A7A3A; }
+        .btn-edit { background: #d4af37; color: #2E1E16; padding: 6px 14px; font-size: 0.85rem; }
+        .btn-delete { background: #c0392b; color: #fff; padding: 6px 14px; font-size: 0.85rem; }
+        .flash { background: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #28a745; }
+        table { width: 100%; background: #fff; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #eee; }
+        th { background: #f9f9f9; color: #555; font-weight: bold; }
+        tr:hover { background: #fafafa; }
+        .empty { text-align: center; padding: 40px; color: #999; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>🌲 پنل مدیریت</h2>
+        <a href="{{ url_for('admin_dashboard') }}">📊 داشبورد</a>
+        <a href="{{ url_for('admin_books') }}" class="active">📚 کتاب‌ها</a>
+        <a href="{{ url_for('admin_categories') }}">🗂 دسته‌بندی‌ها</a>
+        <hr style="border-color:#444; margin: 15px 0;">
+        <a href="{{ url_for('shop') }}">🏠 بازگشت به سایت</a>
+    </aside>
+
+    <main class="main">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="header-actions">
+            <h1>📚 مدیریت کتاب‌ها</h1>
+            <a href="{{ url_for('admin_add_book') }}" class="btn btn-add">+ افزودن کتاب</a>
+        </div>
+
+        {% if books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>عنوان</th>
+                    <th>نویسنده</th>
+                    <th>قیمت</th>
+                    <th>موجودی</th>
+                    <th>دسته</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.price|int }} تومان</td>
+                    <td>{{ book.stock }}</td>
+
+
+<td>{{ book.category.name if book.category else '-' }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_edit_book', book_id=book.id) }}" class="btn btn-edit">ویرایش</a>
+                        <form action="{{ url_for('admin_delete_book', book_id=book.id) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('مطمئنی؟')">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty">هنوز کتابی اضافه نشده است.</div>
+        {% endif %}
+    </main>
+</body>
+</html>
