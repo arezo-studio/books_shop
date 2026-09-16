@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبد خرید | کتاب‌فروشی جنگل جادویی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        /* ====== متغیرها ====== */
+        :root {
+            --brown-dark: #2E1E16;
+            --brown-mid: #4E342E;
+            --green-moss: #3f522d;
+            --green-light: #5A7A3A;
+            --cream: #F1E8D9;
+            --gold: #bea668;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.15);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--cream);
+            color: var(--brown-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* ====== هدر ====== */
+        header {
+            background-color: var(--brown-dark);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--green-moss);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--cream);
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: var(--green-moss);
+            color: #fff;
+        }
+
+        .cart-link {
+            color: var(--gold);
+            font-size: 1.2rem;
+            position: relative;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+
+        #cart-count {
+            background-color: var(--green-moss);
+            color: #e7c9b1;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -8px;
+            left: -8px;
+        }
+
+        /* ====== عنوان صفحه ====== */
+        .page-title {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--brown-dark);
+        }
+
+        .page-title h1 {
+            font-size: 2.2rem;
+            color: var(--brown-dark);
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* ====== محتوای سبد ====== */
+        .cart-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .item-details {
+            flex: 1;
+            min-width: 150px;
+        }
+
+.item-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--brown-dark);
+        }
+
+        .item-author {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            background-color: var(--green-moss);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: background 0.3s;
+        }
+
+        .qty-btn:hover {
+            background-color: var(--green-light);
+        }
+
+        .qty-number {
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background-color: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: inherit;
+        }
+
+        .remove-btn:hover {
+            background-color: #e74c3c;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--green-moss);
+            text-align: left;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--brown-dark);
+        }
+
+        .total-price {
+            color: var(--gold);
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--green-moss);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s, transform 0.2s;
+            font-family: inherit;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .checkout-message {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f4ec;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .checkout-message a {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #999;
+            padding: 60px 0;
+        }
+
+        .empty-cart a {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        /* ====== فوتر ====== */
+        footer {
+            background-color: var(--brown-dark);
+            color: var(--cream);
+            padding: 25px 0 15px;
+            margin-top: auto;
+            border-top: 3px solid var(--green-moss);
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+
+        /* ====== ریسپانسیو ====== */
+        @media (max-width: 600px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-image {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                object-fit: contain;
+            }
+            .quantity-control {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- هدر -->
+    <header>
+        <div class="container header-inner">
+            <a href="{{ url_for('shop') }}" class="logo">🌲 کتاب‌فروشی جنگل جادویی</a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('shop') }}">خانه</a></li>
+                    <li><a href="#">کتاب‌ها</a></li>
+                    <li><a href="#">دسته‌بندی‌ها</a></li>
+                </ul>
+            </nav>
+            <a href="{{ url_for('cart') }}" class="cart-link">
+                🛒 سبد خرید
+                <span id="cart-count">{{ session.get('cart', {})|length }}</span>
+            </a>
+            <div class="user-menu">
+                {% if current_user.is_authenticated %}
+                    <a href="#">{{ current_user.username }}</a>
+                    <a href="{{ url_for('logout') }}">خروج</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">ورود</a>
+                    <a href="{{ url_for('register') }}">ثبت‌نام</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- عنوان -->
+    <section class="page-title">
+        <h1>🛒 سبد خرید</h1>
+    </section>
+
+    <!-- محتوای سبد -->
+    <main class="container">
+        <div class="cart-container">
+            {% if cart_items %}
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <img class="item-image" src="{{ item.book.image if item.book.image else url_for('static', filename='images/book-placeholder.jpg') }}" alt="{{ item.book.title }}">
+                    <div class="item-details">
+                        <div class="item-title">{{ item.book.title }}</div>
+                        <div class="item-author">{{ item.book.author }}</div>
+                        <div class="item-price">{{ item.book.price|int }} تومان</div>
+                    </div>
+                    <div class="quantity-control">
+                        <form action="{{ url_for('update_cart', book_id=item.book.id) }}" method="post">
+                            <button type="submit" name="quantity" value="{{ item.quantity - 1 }}" class="qty-btn">−</button>
+                        </form>
+                        <span class="qty-number">{{ item.quantity }}</span>
+                        <form action="{{ url_for('update_cart', book_id=item.book.id) }}" method="post">
+                            <button type="submit" name="quantity" value="{{ item.quantity + 1 }}" class="qty-btn">+</button>
+                        </form>
+                    </div>
+                    <form action="{{ url_for('remove_from_cart', book_id=item.book.id) }}" method="post">
+                        <button type="submit" class="remove-btn">حذف</button>
+                    </form>
+                </div>
+                {% endfor %}
+
+                <div class="total-section">
+                    مجموع کل: <span class="total-price">{{ total|int }} تومان</span>
+                </div>
+
+                {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('place_order') }}" method="post">
+                        <button type="submit" class="checkout-btn">ثبت سفارش و پرداخت</button>
+                    </form>
+                {% else %}
+                    <div class="checkout-message">
+                        برای ادامه و ثبت سفارش، ابتدا <a href="{{ url_for('login') }}">وارد شوید</a> یا <a href="{{ url_for('register') }}">ثبت‌نام کنید</a>.
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="empty-cart">
+                    سبد خرید خالی است.<br>
+                    <a href="{{ url_for('shop') }}">برو به فروشگاه</a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <p>© ۱۴۰۲ کتاب‌فروشی جنگل جادویی. تمامی حقوق محفوظ است.</p>
+            <p>ساخته شده با چوب، برگ و کمی جادو 🌿</p>
+        </div>
+    </footer>
+
+</body>
+</html>
