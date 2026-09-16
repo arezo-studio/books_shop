@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریت | کتاب‌فروشی جنگل جادویی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: #f4f6f8;
+            color: #2E1E16;
+        }
+
+        /* سایدبار */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            background: #2E1E16;
+            color: #F1E8D9;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #F1E8D9;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar a:hover {
+            background: #5A7A3A;
+        }
+
+        .sidebar a.active {
+            background: #3B5323;
+            border-right: 4px solid #d4af37;
+        }
+
+        /* محتوای اصلی */
+        .main {
+            margin-right: 220px;
+            padding: 30px;
+        }
+
+        .main h1 {
+            color: #3B5323;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #d4af37;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* پیام‌های Flash */
+        .flash-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 4px solid #28a745;
+        }
+
+        /* کارت‌های آمار */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 4px solid #d4af37;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #3B5323;
+        }
+
+        .stat-card .label {
+            color: #777;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* جدول آخرین سفارش‌ها */
+        .recent {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .recent h3 {
+            color: #3B5323;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f9f9f9;
+            color: #555;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- سایدبار -->
+    <aside class="sidebar">
+        <h2>🌲 پنل مدیریت</h2>
+        <a href="{{ url_for('admin_dashboard') }}" class="active">📊 داشبورد</a>
+        <a href="{{ url_for('admin_books') }}">📚 کتاب‌ها</a>
+        <hr style="border-color:#444; margin: 15px 0;">
+        <a href="{{ url_for('shop') }}">🏠 بازگشت به سایت</a>
+    </aside>
+
+    <!-- محتوای اصلی -->
+    <main class="main">
+        <h1>📊 داشبورد</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash-message">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">{{ total_books }}</div>
+                <div class="label">📚 کتاب</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">{{ total_orders }}</div>
+                <div class="label">🧾 سفارش</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">{{ paid_orders }}</div>
+                <div class="label">✅ پرداخت‌شده</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">{{ total_users }}</div>
+                <div class="label">👥 کاربر</div>
+            </div>
+        </div>
+
+        <div class="recent">
+            <h3>🕒 آخرین سفارش‌ها</h3>
+            {% if recent_orders %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر</th>
+                            <th>مبلغ</th>
+                            <th>وضعیت</th>
+                            <th>تاریخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>کاربر #{{ order.user_id }}</td>
+                            <td>{{ order.total_price|int }} تومان</td>
+                            <td>
+                                {% if order.status == 'paid' %}
+                                    <span class="status-badge status-paid">پرداخت‌شده</span>
+                                {% else %}
+                                    <span class="status-badge status-pending">{{ order.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ order.created_at.strftime('%Y/%m/%d') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>هنوز سفارشی ثبت نشده است.</p>
+            {% endif %}
+        </div>
+    </main>
+
+</body>
+</html>
