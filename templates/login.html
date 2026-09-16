@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود | کتاب‌فروشی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; background: #F1E8D9; }
+        .container { max-width: 400px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { width: 100%; padding: 10px; background: #3B5323; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .messages { list-style: none; padding: 0; }
+        .messages li { padding: 5px; background: #f8d7da; color: #721c24; margin-bottom: 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ورود</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            <input type="text" name="username" placeholder="نام کاربری" required>
+            <input type="password" name="password" placeholder="رمز عبور" required>
+            <button type="submit">ورود</button>
+        </form>
+        <p>حساب نداری؟ <a href="{{ url_for('register') }}">ثبت‌نام کن</a></p>
+    </div>
+</body>
+</html>
