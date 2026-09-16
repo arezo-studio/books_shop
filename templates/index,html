@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کتاب‌فروشی جنگل  | فروشگاه آنلاین کتاب</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        /* ====== تنظیمات کلی و متغیرها ====== */
+        :root {
+            --brown-dark: #3d2b22;
+            --brown-mid: #b48d74;
+            --green-moss: #3e502e;
+            --green-light: #4c6138;
+            --cream: #F1E8D9;
+            --gold: #d8c083;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.15);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color:#354128 ;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--brown-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ====== هدر ====== */
+        header {
+            background-color: rgba(46, 32, 25, 0.95);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--green-moss);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav a {
+            color: var(--cream);
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .main-nav a:hover {
+            background: var(--green-moss);
+            color: #fff;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--cream);
+            border-radius: 25px;
+            padding: 5px 15px;
+            gap: 10px;
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+            color: var(--brown-dark);
+        }
+
+        .search-box button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .cart-link {
+            color: var(--gold);
+            font-size: 1.2rem;
+            position: relative;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 25px;
+        }
+
+        #cart-count {
+            background-color: var(--green-moss);
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: -8px;
+            left: -8px;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .user-menu a {
+            color: var(--cream);
+            transition: color 0.3s;
+        }
+
+
+.user-menu a:hover {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--cream);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* ====== Hero ====== */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            color: var(--cream);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--brown-dark);
+            padding: 12px 30px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #b19c69;
+            box-shadow: 0 0 15px rgba(190, 248, 136, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* ====== بخش‌های عمومی ====== */
+        .section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--cream);
+            margin-bottom: 30px;
+            background: rgba(95, 66, 51, 0.8);
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--green-moss);
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ====== دسته‌بندی‌ها ====== */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 140px;
+            border: 2px solid var(--green-moss);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 83, 35, 0.5);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(59, 40, 31, 0.85);
+            color: var(--cream);
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        /* ====== کتاب‌ها ====== */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid #D2C4A7;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+            border-color: var(--green-moss);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+
+.book-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--brown-dark);
+        }
+
+        .book-author {
+            color: #5D4037;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .book-price {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-to-cart {
+            background-color: var(--green-moss);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: var(--green-light);
+            box-shadow: 0 0 10px rgba(59, 83, 35, 0.5);
+        }
+
+        /* ====== بخش اعتمادسازی ====== */
+        .trust-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            background: rgba(255,255,255,0.9);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .trust-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .trust-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .trust-item p {
+            font-weight: bold;
+            color: var(--brown-dark);
+        }
+
+        /* ====== فوتر ====== */
+        footer {
+            background-color: rgba(46, 30, 22, 0.95);
+            color: var(--cream);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-top: 3px solid var(--green-moss);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col h4 {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #555;
+            padding-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* ====== ریسپانسیو ====== */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                width: 100%;
+            }
+            .main-nav.active {
+                display: block;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 0;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .search-box {
+                max-width: 100%;
+                order: 2;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر -->
+    <header>
+        <div class="container header-inner">
+            <a href="{{ url_for('shop') }}" class="logo">🌲 کتاب‌فروشی جنگل جادویی</a>
+
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('shop') }}">خانه</a></li>
+                    <li><a href="#">کتاب‌ها</a></li>
+                    <li><a href="#">دسته‌بندی‌ها</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                </ul>
+            </nav>
+
+            <form class="search-box" action="{{ url_for('search') }}" method="get">
+                <input type="text" name="q" placeholder="جستجوی کتاب...">
+                <button type="submit">🔍</button>
+            </form>
+           
+            <a href="{{ url_for('cart') }}" class="cart-link">
+                🛒 سبد خرید
+                <span id="cart-count">{{ session.get('cart', {})|length }}</span>
+            </a>
+
+            <div class="user-menu">
+    {% if current_user.is_authenticated %}
+        {% if current_user.is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" style="color:#d4af37;">⚙️ پنل مدیریت</a>
+        {% endif %}
+        <a href="#">{{ current_user.username }}</a>
+        <a href="{{ url_for('logout') }}">خروج</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">ورود</a>
+        <a href="{{ url_for('register') }}">ثبت‌نام</a>
+    {% endif %}
+       </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>به دنیای داستان‌ها خوش آمدید</h1>
+            <p>هر کتاب یک سفر جادویی است. همین حالا شروع کن.</p>
+            <a href="#books" class="btn">خرید را شروع کن</a>
+        </div>
+    </section>
+
+    <!-- دسته‌بندی‌ها -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-title">دسته‌بندی‌ها</div>
+            <div class="categories-grid">
+                {% for cat in categories %}
+                <div class="category-card">
+                    <a href="{{ url_for('category', cat_name=cat.name) }}">
+                        <img src="{{ url_for('static', filename='images/category-placeholder.jpg') }}" alt="{{ cat.name }}">
+                        <div class="category-overlay">{{ cat.name }}</div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- کتاب‌های ویژه -->
+    <section class="section" id="books">
+        <div class="container">
+            <div class="section-title">کتاب‌های ویژه</div>
+            <div class="books-grid">
+                {% for book in books %}
+                <div class="book-card">
+                    <img src="{{ book.image if book.image else url_for('static', filename='images/book-placeholder.jpg') }}" alt="{{ book.title }}">
+                    <div class="book-info">
+                        <h3 class="book-title">{{ book.title }}</h3>
+                        <p class="book-author">{{ book.author }}</p>
+                        <p class="book-price">{{ book.price|int }} تومان</p>
+                        <form action="{{ url_for('add_to_cart', book_id=book.id) }}" method="post">
+                            <button type="submit" class="btn-add-to-cart">افزودن به سبد</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش اعتمادسازی -->
+    <section class="container">
+        <div class="trust-section">
+            <div class="trust-item">
+                <div class="icon">🚚</div>
+                <p>ارسال سریع</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon">🔒</div>
+                <p>پرداخت امن</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon">📞</div>
+                <p>پشتیبانی ۲۴/۷</p>
+            </div>
+            <div class="trust-item">
+                <div class="icon">↩️</div>
+                <p>بازگشت آسان</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>درباره ما</h4>
+                    <p>ما یک کتاب‌فروشی آنلاین با حال‌وهوای جنگل جادویی هستیم. هدف ما ترویج کتاب‌خوانی است.</p>
+                </div>
+
+<div class="footer-col">
+                    <h4>لینک‌های مفید</h4>
+                    <ul>
+                        <li><a href="#">حریم خصوصی</a></li>
+                        <li><a href="#">قوانین و مقررات</a></li>
+                        <li><a href="#">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>تماس با ما</h4>
+                    <ul>
+                        <li>ایمیل: info@magicbookshop.com</li>
+                        <li>تلفن: ۰۲۱-۱۲۳۴۵۶۷</li>
+                        <li>آدرس: تهران، خیابان کتاب، پلاک ۱</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© ۱۴۰۲ کتاب‌فروشی جنگل جادویی. تمامی حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // فقط منوی همبرگری
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('main-nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
