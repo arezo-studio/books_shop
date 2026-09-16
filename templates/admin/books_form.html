@@ -1,0 +1,103 @@
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'ویرایش کتاب' if book else 'افزودن کتاب' }} | پنل مدیریت</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Vazirmatn', sans-serif; background: #f4f6f8; color: #2E1E16; }
+        .sidebar { position: fixed; right: 0; top: 0; width: 220px; height: 100vh; background: #2E1E16; color: #F1E8D9; padding: 20px 0; overflow-y: auto; }
+        .sidebar h2 { text-align: center; color: #d4af37; margin-bottom: 30px; font-size: 1.3rem; }
+        .sidebar a { display: block; color: #F1E8D9; padding: 12px 20px; text-decoration: none; transition: background 0.3s; font-size: 0.95rem; }
+        .sidebar a:hover { background: #5A7A3A; }
+        .sidebar a.active { background: #3B5323; border-right: 4px solid #d4af37; }
+        .main { margin-right: 220px; padding: 30px; }
+        .main h1 { color: #3B5323; margin-bottom: 25px; border-bottom: 3px solid #d4af37; display: inline-block; padding-bottom: 5px; }
+        .form-box { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); max-width: 650px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; color: #444; font-size: 0.95rem; }
+        input, textarea, select { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; font-size: 1rem; transition: border-color 0.3s; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: #3B5323; }
+        textarea { min-height: 120px; resize: vertical; }
+        .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 1rem; text-decoration: none; display: inline-block; }
+        .btn-submit { background: #3B5323; color: #fff; }
+        .btn-submit:hover { background: #5A7A3A; }
+        .btn-cancel { background: #ddd; color: #333; }
+        .btn-cancel:hover { background: #ccc; }
+        .flash { background: #f8d7da; color: #721c24; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>🌲 پنل مدیریت</h2>
+        <a href="{{ url_for('admin_dashboard') }}">📊 داشبورد</a>
+        <a href="{{ url_for('admin_books') }}" class="active">📚 کتاب‌ها</a>
+        <a href="{{ url_for('admin_categories') }}">🗂 دسته‌بندی‌ها</a>
+        <hr style="border-color:#444; margin: 15px 0;">
+        <a href="{{ url_for('shop') }}">🏠 بازگشت به سایت</a>
+    </aside>
+
+    <main class="main">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>{{ '✏️ ویرایش کتاب' if book else '➕ افزودن کتاب جدید' }}</h1>
+
+        <div class="form-box">
+            {% if book %}
+                <form method="post" action="{{ url_for('admin_edit_book', book_id=book.id) }}">
+            {% else %}
+                <form method="post" action="{{ url_for('admin_add_book') }}">
+            {% endif %}
+
+                <div class="form-group">
+                    <label>عنوان کتاب *</label>
+                    <input type="text" name="title" value="{{ book.title if book else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label>نویسنده *</label>
+                    <input type="text" name="author" value="{{ book.author if book else '' }}" required>
+                </div>
+<div class="form-group">
+                    <label>قیمت (تومان) *</label>
+                    <input type="number" name="price" value="{{ book.price|int if book else '' }}" required>
+                </div>
+                <div class="form-group">
+                    <label>موجودی</label>
+                    <input type="number" name="stock" value="{{ book.stock if book else 0 }}">
+                </div>
+                <div class="form-group">
+                    <label>دسته‌بندی</label>
+                    <select name="category_id">
+                        <option value="">-- انتخاب کنید --</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if book and book.category_id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>آدرس عکس (اختیاری)</label>
+                    <input type="text" name="image" value="{{ book.image if book else '' }}" placeholder="مثلاً: book1.jpg">
+                </div>
+                <div class="form-group">
+                    <label>توضیحات</label>
+                    <textarea name="description">{{ book.description if book else '' }}</textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-submit">💾 ذخیره</button>
+                    <a href="{{ url_for('admin_books') }}" class="btn btn-cancel">لغو</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
