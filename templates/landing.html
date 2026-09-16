@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به کتاب‌فروشی جادویی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
+
+        .landing {
+            background-image: url("{{ url_for('static', filename='images/bookshop.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+
+        /* لایه تیره که مانع کلیک روی دکمه نمی‌شود */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-btn {
+            background-color: #d4af37;
+            color: #1e3a34;
+            text-decoration: none;
+            padding: 20px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-radius: 5px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .welcome-btn:hover {
+            background-color: transparent;
+            color: #d4af37;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="landing">
+        <div class="overlay"></div>
+        <div class="content">
+            <a href="{{ url_for('shop') }}" class="welcome-btn">Welcome to book shop</a>
+        </div>
+    </div>
+</body>
+</html>
