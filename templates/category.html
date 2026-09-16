@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دسته‌بندی: {{ category.name }} | کتاب‌فروشی جنگل جادویی</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        :root {
+            --brown-dark: #2E1E16;
+            --brown-mid: #4E342E;
+            --green-moss: #3B5323;
+            --green-light: #5A7A3A;
+            --cream: #F1E8D9;
+            --gold: #B8860B;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.15);
+            --radius: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--cream);
+            color: var(--brown-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        /* هدر */
+        header {
+            background-color: var(--brown-dark);
+            padding: 12px 0;
+            border-bottom: 3px solid var(--green-moss);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo { font-size: 1.7rem; font-weight: bold; color: var(--gold); }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav a { color: var(--cream); font-size: 1rem; padding: 5px 10px; border-radius: 5px; transition: background 0.3s, color 0.3s; }
+        nav a:hover { background: var(--green-moss); color: #fff; }
+        .cart-link {
+            color: var(--gold); font-size: 1.2rem; position: relative;
+            background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 25px;
+        }
+        #cart-count {
+            background-color: var(--green-moss); color: #fff; border-radius: 50%;
+            padding: 2px 8px; font-size: 0.8rem; position: absolute; top: -8px; left: -8px;
+        }
+        .user-menu { display: flex; gap: 10px; align-items: center; }
+        .user-menu a { color: var(--cream); font-size: 0.95rem; }
+        .user-menu a:hover { color: var(--gold); }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 0 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .breadcrumb a { color: var(--green-moss); }
+
+        /* عنوان دسته */
+        .page-title {
+            text-align: center;
+            margin: 20px 0 30px;
+        }
+        .page-title h1 {
+            font-size: 2rem;
+            color: var(--brown-dark);
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* کتاب‌ها */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        .book-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .book-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .book-info {
+
+padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            text-align: center;
+        }
+        .book-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; }
+        .book-author { color: #666; font-size: 0.85rem; margin-bottom: 10px; }
+        .book-price { color: var(--gold); font-weight: bold; margin-bottom: 15px; }
+        .btn-add-to-cart {
+            background-color: var(--green-moss);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.3s;
+            margin-top: auto;
+        }
+        .btn-add-to-cart:hover { background-color: var(--green-light); }
+
+        .no-books {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.3rem;
+            color: #999;
+            grid-column: 1 / -1;
+        }
+
+        /* فوتر */
+        footer {
+            background-color: var(--brown-dark);
+            color: var(--cream);
+            padding: 25px 0 15px;
+            text-align: center;
+            margin-top: auto;
+            border-top: 3px solid var(--green-moss);
+        }
+        footer p { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <!-- هدر -->
+    <header>
+        <div class="container header-inner">
+            <a href="{{ url_for('shop') }}" class="logo">🌲 کتاب‌فروشی جنگل جادویی</a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('shop') }}">خانه</a></li>
+                    <li><a href="#">کتاب‌ها</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                </ul>
+            </nav>
+            <a href="{{ url_for('cart') }}" class="cart-link">
+                🛒 سبد خرید
+                <span id="cart-count">{{ session.get('cart', {})|length }}</span>
+            </a>
+            <div class="user-menu">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                        <a href="{{ url_for('admin_dashboard') }}">⚙️ پنل</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}">خروج</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">ورود</a>
+                    <a href="{{ url_for('register') }}">ثبت‌نام</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container breadcrumb">
+        <a href="{{ url_for('shop') }}">خانه</a> &gt;
+        <span>دسته‌بندی: {{ category.name }}</span>
+    </div>
+
+    <!-- عنوان -->
+    <section class="container page-title">
+        <h1>📚 {{ category.name }}</h1>
+    </section>
+
+    <!-- کتاب‌ها -->
+    <main class="container">
+        {% if books %}
+        <div class="books-grid">
+            {% for book in books %}
+            <div class="book-card">
+                <img src="{{ book.image if book.image else url_for('static', filename='images/book-placeholder.jpg') }}" alt="{{ book.title }}">
+                <div class="book-info">
+                    <div class="book-title">{{ book.title }}</div>
+                    <div class="book-author">{{ book.author }}</div>
+                    <div class="book-price">{{ book.price|int }} تومان</div>
+                    <form action="{{ url_for('add_to_cart', book_id=book.id) }}" method="post">
+                        <button type="submit" class="btn-add-to-cart">افزودن به سبد</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-books">📭 در این دسته‌بندی هنوز کتابی وجود ندارد.</div>
+        {% endif %}
+    </main>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <p>© ۱۴۰۲ کتاب‌فروشی جنگل جادویی. تمامی حقوق محفوظ است.</p>
+            <p>ساخته شده با چوب، برگ و کمی جادو 🌿</p>
+        </div>
+    </footer>
+
+</body>
+</html>
