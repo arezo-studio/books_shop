@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت دسته‌بندی‌ها | پنل مدیریت</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Vazirmatn', sans-serif; background: #f4f6f8; color: #2E1E16; }
+        .sidebar { position: fixed; right: 0; top: 0; width: 220px; height: 100vh; background: #2E1E16; color: #F1E8D9; padding: 20px 0; overflow-y: auto; }
+        .sidebar h2 { text-align: center; color: #d4af37; margin-bottom: 30px; font-size: 1.3rem; }
+        .sidebar a { display: block; color: #F1E8D9; padding: 12px 20px; text-decoration: none; transition: background 0.3s; font-size: 0.95rem; }
+        .sidebar a:hover { background: #5A7A3A; }
+        .sidebar a.active { background: #3B5323; border-right: 4px solid #d4af37; }
+        .main { margin-right: 220px; padding: 30px; }
+        .main h1 { color: #3B5323; margin-bottom: 25px; border-bottom: 3px solid #d4af37; display: inline-block; padding-bottom: 5px; }
+        .add-form { background: #fff; padding: 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; gap: 10px; }
+        .add-form input { flex: 1; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; font-size: 1rem; }
+        .add-form input:focus { outline: none; border-color: #3B5323; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+        .btn-add { background: #3B5323; color: #fff; }
+        .btn-add:hover { background: #5A7A3A; }
+        .btn-delete { background: #c0392b; color: #fff; padding: 6px 14px; font-size: 0.85rem; }
+        .btn-delete:hover { background: #e74c3c; }
+        .flash { background: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #28a745; }
+        .flash-error { background: #f8d7da; color: #721c24; border-right-color: #dc3545; }
+        table { width: 100%; background: #fff; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #eee; }
+        th { background: #f9f9f9; color: #555; font-weight: bold; }
+        tr:hover { background: #fafafa; }
+        .empty { text-align: center; padding: 40px; color: #999; }
+        .badge { background: #e8f5e9; color: #2e7d32; padding: 3px 10px; border-radius: 20px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>🌲 پنل مدیریت</h2>
+        <a href="{{ url_for('admin_dashboard') }}">📊 داشبورد</a>
+        <a href="{{ url_for('admin_books') }}">📚 کتاب‌ها</a>
+        <a href="{{ url_for('admin_categories') }}" class="active">🗂 دسته‌بندی‌ها</a>
+        <hr style="border-color:#444; margin: 15px 0;">
+        <a href="{{ url_for('shop') }}">🏠 بازگشت به سایت</a>
+    </aside>
+
+    <main class="main">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>🗂 مدیریت دسته‌بندی‌ها</h1>
+
+        <!-- فرم افزودن دسته‌بندی جدید -->
+        <form method="post" class="add-form">
+            <input type="text" name="name" placeholder="نام دسته‌بندی جدید..." required>
+            <button type="submit" class="btn btn-add">+ افزودن</button>
+        </form>
+
+        <!-- جدول دسته‌بندی‌ها -->
+        {% if categories %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نام دسته‌بندی</th>
+
+
+<th>تعداد کتاب</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                <tr>
+                    <td>{{ cat.id }}</td>
+                    <td>{{ cat.name }}</td>
+                    <td><span class="badge">{{ cat.books|length }} کتاب</span></td>
+                    <td>
+                        {% if cat.books|length == 0 %}
+                        <form action="{{ url_for('admin_delete_category', cat_id=cat.id) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('مطمئنی؟')">حذف</button>
+                        </form>
+                        {% else %}
+                        <span style="color:#999; font-size:0.85rem;">قابل حذف نیست</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty">هنوز دسته‌بندی‌ای اضافه نشده است.</div>
+        {% endif %}
+    </main>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت دسته‌بندی‌ها | پنل مدیریت</title>
+    <link href="https://v1.fontapi.ir/css/Vazirmatn" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Vazirmatn', sans-serif; background: #f4f6f8; color: #2E1E16; }
+        .sidebar { position: fixed; right: 0; top: 0; width: 220px; height: 100vh; background: #2E1E16; color: #F1E8D9; padding: 20px 0; overflow-y: auto; }
+        .sidebar h2 { text-align: center; color: #d4af37; margin-bottom: 30px; font-size: 1.3rem; }
+        .sidebar a { display: block; color: #F1E8D9; padding: 12px 20px; text-decoration: none; transition: background 0.3s; font-size: 0.95rem; }
+        .sidebar a:hover { background: #5A7A3A; }
+        .sidebar a.active { background: #3B5323; border-right: 4px solid #d4af37; }
+        .main { margin-right: 220px; padding: 30px; }
+        .main h1 { color: #3B5323; margin-bottom: 25px; border-bottom: 3px solid #d4af37; display: inline-block; padding-bottom: 5px; }
+        .add-form { background: #fff; padding: 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; gap: 10px; }
+        .add-form input { flex: 1; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; font-size: 1rem; }
+        .add-form input:focus { outline: none; border-color: #3B5323; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+        .btn-add { background: #3B5323; color: #fff; }
+        .btn-add:hover { background: #5A7A3A; }
+        .btn-delete { background: #c0392b; color: #fff; padding: 6px 14px; font-size: 0.85rem; }
+        .btn-delete:hover { background: #e74c3c; }
+        .flash { background: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #28a745; }
+        .flash-error { background: #f8d7da; color: #721c24; border-right-color: #dc3545; }
+        table { width: 100%; background: #fff; border-collapse: collapse; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #eee; }
+        th { background: #f9f9f9; color: #555; font-weight: bold; }
+        tr:hover { background: #fafafa; }
+        .empty { text-align: center; padding: 40px; color: #999; }
+        .badge { background: #e8f5e9; color: #2e7d32; padding: 3px 10px; border-radius: 20px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>🌲 پنل مدیریت</h2>
+        <a href="{{ url_for('admin_dashboard') }}">📊 داشبورد</a>
+        <a href="{{ url_for('admin_books') }}">📚 کتاب‌ها</a>
+        <a href="{{ url_for('admin_categories') }}" class="active">🗂 دسته‌بندی‌ها</a>
+        <hr style="border-color:#444; margin: 15px 0;">
+        <a href="{{ url_for('shop') }}">🏠 بازگشت به سایت</a>
+    </aside>
+
+    <main class="main">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="flash">{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>🗂 مدیریت دسته‌بندی‌ها</h1>
+
+        <!-- فرم افزودن دسته‌بندی جدید -->
+        <form method="post" class="add-form">
+            <input type="text" name="name" placeholder="نام دسته‌بندی جدید..." required>
+            <button type="submit" class="btn btn-add">+ افزودن</button>
+        </form>
+
+        <!-- جدول دسته‌بندی‌ها -->
+        {% if categories %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نام دسته‌بندی</th>
+
+
+<th>تعداد کتاب</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                <tr>
+                    <td>{{ cat.id }}</td>
+                    <td>{{ cat.name }}</td>
+                    <td><span class="badge">{{ cat.books|length }} کتاب</span></td>
+                    <td>
+                        {% if cat.books|length == 0 %}
+                        <form action="{{ url_for('admin_delete_category', cat_id=cat.id) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('مطمئنی؟')">حذف</button>
+                        </form>
+                        {% else %}
+                        <span style="color:#999; font-size:0.85rem;">قابل حذف نیست</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty">هنوز دسته‌بندی‌ای اضافه نشده است.</div>
+        {% endif %}
+    </main>
+</body>
+</html>
